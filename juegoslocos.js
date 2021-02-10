@@ -3,6 +3,7 @@ const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
 const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
+const ULTIMO_NIVEL = 10
 
 class Juego {
 
@@ -13,6 +14,7 @@ class Juego {
   }
 
   inicializar() {
+      this.elegirColor = this.elegirColor.bind(this)
     btnEmpezar.classList.add('hide')
     this.nivel = 10
     this.colores = {
@@ -24,10 +26,12 @@ class Juego {
   }
 
   generarSecuencia() {
-    this.secuencia = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
+    this.secuencia = new Array(ULTIMO_NIVEL).fill(0).map(n => Math.floor(Math.random() * 4))
   }
 
   siguienteNivel() {
+      this.siguienteNivel = 0
+      this.nombreAtributo = 'valor'
     this.iluminarSecuencia()
     this.agregarEventosClick()
 
@@ -35,16 +39,16 @@ class Juego {
 
   
 
-  transformarNumeroAColor(numero) {
-    switch (numero) {
-      case 0:
-        return 'celeste'
-      case 1:
-        return 'violeta'
-      case 2:
-        return 'naranja'
-      case 3:
-        return 'verde'
+  transformarColorANumero(color) {
+    switch (color) {
+      case 'celeste':
+        return 0
+      case 'violeta':
+        return 1
+      case 'naranja':
+        return 2
+      case 'verde':
+        return 3
     }
   }
 
@@ -74,7 +78,22 @@ class Juego {
   }
 
   elegirColor(ev){
-    console.log(ev)
+    const nombreColor = ev.target.dataset.color
+    const numeroColor = transformarNumeroAColor(nombreColor)
+    this.iluminarColor(nombreColor)
+    if (numeroColor === this.secuencia[this.subnivel])
+    this.subnivel++
+    if (this.subnivel == this.nivel) {
+        this.nivel++
+        // this.eliminarEventosClick()
+        if (this.nivel === ULTIMO_NIVEL + 1)) {
+        //Gano!
+        } else {
+            this.siguienteNivel()
+        }
+
+
+    }
   }
 }
 
