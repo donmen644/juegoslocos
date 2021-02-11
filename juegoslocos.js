@@ -54,7 +54,7 @@ class Juego {
 
   iluminarSecuencia() {
     for (let i = 0; i < this.nivel; i++) {
-      const color = this.transformarNumeroAColor(this.secuencia[i])
+      const color = this.transformarColorANumero(this.secuencia[i])
       this.iluminarColor(color)
       setTimeout(() => this.iluminarColor(color), 1000 * i)
     }
@@ -62,6 +62,7 @@ class Juego {
 
 
   iluminarColor(color) {
+      console.log(color)
     this.colores[color].classList.add('light')
     setTimeout(() => this.apagarColor(color), 350)
   }
@@ -76,23 +77,32 @@ class Juego {
     this.colores.violeta.addEventListener('click', this.elegirColor)
     this.colores.naranja.addEventListener('click', this.elegirColor)
   }
+  EliminarEventosClick(){
+    this.colores.celeste.removeEventListener('click', this.elegirColor)
+    this.colores.verde.removeListener('click', this.elegirColor)
+    this.colores.violeta.removeEventListener('click', this.elegirColor)
+    this.colores.naranja.removeEventListener('click', this.elegirColor)
+  }
+  
 
   elegirColor(ev){
     const nombreColor = ev.target.dataset.color
-    const numeroColor = transformarNumeroAColor(nombreColor)
+    const numeroColor = this.transformarColorANumero(nombreColor)
     this.iluminarColor(nombreColor)
     if (numeroColor === this.secuencia[this.subnivel])
     this.subnivel++
     if (this.subnivel == this.nivel) {
         this.nivel++
         // this.eliminarEventosClick()
-        if (this.nivel === ULTIMO_NIVEL + 1)) {
+        if (this.nivel === ULTIMO_NIVEL + 1) {
         //Gano!
         } else {
             this.siguienteNivel()
         }
 
 
+    } else{
+    //Perdio!
     }
   }
 }
