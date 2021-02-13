@@ -43,15 +43,16 @@ class Juego {
   transformarColorANumero(color) {
     console.log(color)
     switch (color) {
-      
-      case 'celeste':
-        return 0
-      case 'violeta':
-        return 1
-      case 'naranja':
-        return 2
-      case 'verde':
-        return 3
+
+      case 0 :
+        return 'celeste'
+      case 1:
+        return 'violeta'
+      case 2:
+        return 'naranja'
+      case 3:
+        return 'verde'
+
     }
   }
 
@@ -59,8 +60,6 @@ class Juego {
     for (let i = 0; i < this.nivel; i++) {
       const color = this.transformarColorANumero(this.secuencia[i])
       console.log(this.secuencia[i])
-      
-      this.iluminarColor(i)
       setTimeout(() => this.iluminarColor(color), 1000 * i)
     }
   }
